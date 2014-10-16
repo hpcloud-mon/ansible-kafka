@@ -1,0 +1,7 @@
+---
+conf_dir: /etc/kafka
+data_dir: /var/kafka
+kafka_group: kafka
+kafka_user: kafka
+log_dir: /var/log/kafka
+upstart_conf: /etc/init/kafka.conf

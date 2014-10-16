@@ -1,0 +1,4 @@
+---
+apache_mirror: http://apache.mirrors.tds.net
+kafka_id: 0
+kafka_version: 0.8.1.1
