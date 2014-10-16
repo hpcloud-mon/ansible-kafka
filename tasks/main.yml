@@ -9,36 +9,36 @@
   get_url: dest=/root url="{{apache_mirror}}/kafka/{{kafka_version}}/kafka_2.9.2-{{kafka_version}}.tgz"
 
 - name: Uncompress the kafka tar
-  unarchive: copy=no creates=/opt/kafka/kafka-{{kafka_version}} dest=/opt src=/root/{{kafka_version}}/kafka_2.9.2-{{kafka_version}}.tgz
+  unarchive: copy=no creates=/opt/kafka/kafka-{{kafka_version}} dest=/opt src=/root/kafka_2.9.2-{{kafka_version}}.tgz
 
 - file: Link /opt/kafka to the right version
-  file: path=/opt/kafka state=link src=/opt/kafka/kafka-{{kafka_version}}
+  file: path=/opt/kafka state=link src=/opt/kafka_2.9.2-{{kafka_version}}
 
 - name: create upstart config
-  copy: dest={{upstart_conf}} owner=root group=root mode=644 src=kafka.conf
+  copy: dest={{kafka_upstart_conf}} owner=root group=root mode=644 src=kafka.conf
   notify:
     - restart kafka
 
 - name: Create data_dir
-  file: path={{data_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
+  file: path={{kafka_data_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
 
 - name: Remove lost+found in the datadir
-  file: path="{{data_dir}}/lost+found" state=absent
+  file: path="{{kafka_data_dir}}/lost+found" state=absent
 
 - name: Create log_dir
-  file: path={{log_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
+  file: path={{kafka_log_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
 
 - name: link conf_dir to /opt/kafka/config
-  file: path={{conf_dir}} state=link src=/opt/kafka/config
+  file: path={{kafka_conf_dir}} state=link src=/opt/kafka/config
 
 # Setup log4j.properties
 - name: create log4j.properties
-  template: dest="{{conf_dir}}/log4j.properties" owner={{kafka_user}} group={{kafka_group}} mode=644 src=log4j.properties.j2
+  template: dest="{{kafka_conf_dir}}/log4j.properties" owner={{kafka_user}} group={{kafka_group}} mode=644 src=log4j.properties.j2
   notify:
     - restart kafka
 
 # Setup server.properties
 - name: create server.properties
-  template: dest="{{conf_dir}}/server.properties" owner={{kafka_user}} group={{kafka_group}} mode=640 src=server.properties.j2
+  template: dest="{{kafka_conf_dir}}/server.properties" owner={{kafka_user}} group={{kafka_group}} mode=640 src=server.properties.j2
   notify:
     - restart kafka
