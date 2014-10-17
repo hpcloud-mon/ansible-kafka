@@ -13,4 +13,4 @@ galaxy_info:
   - clustering
   - system
 dependencies: 
-  - { role: zookeeper }
+  - { role: tkuhlman.zookeeper }
