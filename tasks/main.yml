@@ -11,7 +11,7 @@
 - name: Uncompress the kafka tar
   unarchive: copy=no creates=/opt/kafka_2.9.2-{{kafka_version}} dest=/opt src=/root/kafka_2.9.2-{{kafka_version}}.tgz
 
-- file: Link /opt/kafka to the right version
+- name: Link /opt/kafka to the right version
   file: path=/opt/kafka state=link src=/opt/kafka_2.9.2-{{kafka_version}}
 
 - name: create upstart config
