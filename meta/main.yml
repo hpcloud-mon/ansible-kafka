@@ -12,5 +12,4 @@ galaxy_info:
   categories:
   - clustering
   - system
-dependencies: 
-  - { role: tkuhlman.zookeeper }
+dependencies: []
