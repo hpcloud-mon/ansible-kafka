@@ -8,7 +8,10 @@ galaxy_info:
   platforms:
   - name: Ubuntu
     versions:
-    - all
+    - trusty
+  - name: Debian
+    versions:
+    - jessie
   categories:
   - clustering
   - system

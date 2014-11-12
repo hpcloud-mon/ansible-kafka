@@ -21,6 +21,13 @@
   copy: dest={{kafka_upstart_conf}} owner=root group=root mode=644 src=kafka.conf
   notify:
     - restart kafka
+  when: ansible_distribution_release == 'trusty'
+
+- name: create systemd config
+  copy: dest={{kafka_systemd_service}} owner=root group=root mode=644 src=kafka.service
+  notify:
+    - restart kafka
+  when: ansible_distribution_release != 'trusty'
 
 - name: Create data_dir
   file: path={{kafka_data_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
