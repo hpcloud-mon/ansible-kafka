@@ -6,6 +6,7 @@ Installs [kafka](https://kafka.apache.org/)
 
 ##Optional
 - kafka_listen_address - defines a specifc address for kafka to listen on.
+- If running as a cluster set `kafka_id` for each node.
 
 ##License
 Apache
