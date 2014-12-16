@@ -52,3 +52,8 @@
   template: dest="{{kafka_conf_dir}}/server.properties" owner={{kafka_user}} group={{kafka_group}} mode=640 src=server.properties.j2
   notify:
     - restart kafka
+
+- meta: flush_handlers
+
+- name: Enable kafka
+  service: name=kafka state=started enabled=yes
