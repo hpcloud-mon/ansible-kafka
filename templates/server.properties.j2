@@ -6,7 +6,7 @@ broker.id={{kafka_id}}
 ############################# Socket Server Settings #############################
 
 # The port the socket server listens on
-port=9092
+port={{kafka_port}}
 
 # Hostname the broker will bind to and advertise to producers and consumers.
 # If not set, the server will bind to all interfaces and advertise the value returned from
@@ -18,19 +18,19 @@ host.name={{kafka_listen_address}}
 {% endif %}
 
 # The number of threads handling network requests
-num.network.threads=2
+num.network.threads={{kafka_num_network_threads}}
 
 # The number of threads doing disk I/O
-num.io.threads=2
+num.io.threads={{kafka_num_io_threads}}
 
 # The send buffer (SO_SNDBUF) used by the socket server
-socket.send.buffer.bytes=1048576
+socket.send.buffer.bytes={{kafka_socket_send_buffer_bytes}}
 
 # The receive buffer (SO_RCVBUF) used by the socket server
-socket.receive.buffer.bytes=1048576
+socket.receive.buffer.bytes={{kafka_socket_receive_buffer_bytes}}
 
 # The maximum size of a request that the socket server will accept (protection against OOM)
-socket.request.max.bytes=104857600
+socket.request.max.bytes={{kafka_socket_request_max_bytes}}
 
 
 ############################# Log Basics #############################
@@ -38,10 +38,10 @@ socket.request.max.bytes=104857600
 # A comma seperated list of directories under which to store log files
 log.dirs={{kafka_data_dir}}
 
-auto.create.topics.enable=false
+auto.create.topics.enable={{kafka_auto_create_topics}}
 # The number of logical partitions per topic per server. More partitions allow greater parallelism
 # for consumption, but also mean more files.
-num.partitions=2
+num.partitions={{kafka_num_partitions}}
 
 ############################# Log Flush Policy #############################
 
@@ -55,10 +55,10 @@ num.partitions=2
 # every N messages (or both). This can be done globally and overridden on a per-topic basis.
 
 # The number of messages to accept before forcing a flush of data to disk
-log.flush.interval.messages=10000
+log.flush.interval.messages={{kafka_log_flush_interval_messages}}
 
 # The maximum amount of time a message can sit in a log before we force a flush
-log.flush.interval.ms=1000
+log.flush.interval.ms={{kafka_log_flush_interval_ms}}
 
 # Per-topic overrides for log.flush.interval.ms
 #log.flush.intervals.ms.per.topic=topic1:1000, topic2:3000
@@ -71,18 +71,18 @@ log.flush.interval.ms=1000
 # from the end of the log.
 
 # The minimum age of a log file to be eligible for deletion
-log.retention.hours=24
+log.retention.hours{{kafka_log_retention_hours}}
 
 # A size-based retention policy for logs. Segments are pruned from the log as long as the remaining
 # segments don't drop below log.retention.bytes.
 #log.retention.bytes=1073741824
 
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
-log.segment.bytes=536870912
+log.segment.bytes={{kafka_log_segment_bytes}}
 
 # The interval at which log segments are checked to see if they can be deleted according
 # to the retention policies
-log.cleanup.interval.mins=1
+log.cleanup.interval.mins={{kafka_log_cleanup_interval_mins}}
 
 ############################# Zookeeper #############################
 
@@ -94,6 +94,6 @@ log.cleanup.interval.mins=1
 zookeeper.connect={{zookeeper_hosts}}
 
 # Timeout in ms for connecting to zookeeper
-zookeeper.connection.timeout.ms=1000000
+zookeeper.connection.timeout.ms={{zookeeper_connection_timeout_ms}}
 
 
