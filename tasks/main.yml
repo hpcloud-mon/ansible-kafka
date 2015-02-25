@@ -1,6 +1,7 @@
 ---
 - name: Install OpenJDK
   apt: name=openjdk-7-jre-headless state=present
+  when: not skip_install
 
 - name: setup group
   group: name={{kafka_group}} system=yes
