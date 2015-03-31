@@ -6,17 +6,4 @@ kafka_user: kafka
 kafka_log_dir: /var/log/kafka
 kafka_upstart_conf: /etc/init/kafka.conf
 kafka_systemd_service: /etc/systemd/system/kafka.service
-kafka_port: 9092
 kafka_auto_create_topics: "false"
-kafka_num_network_threads: 2
-kafka_num_io_threads: 2
-kafka_num_partitions: 2
-kafka_socket_send_buffer_bytes: 1048576
-kafka_socket_receive_buffer_bytes: 1048576
-kafka_socket_request_max_bytes: 104857600
-kafka_log_flush_interval_messages: 10000
-kafka_log_flush_interval_ms: 1000
-kafka_log_retention_hours: 24
-kafka_log_segment_bytes: 536870912
-kafka_log_cleanup_interval_mins: 1
-zookeeper_connection_timeout_ms: 1000000
