@@ -1,12 +1,16 @@
 ############################# Server Basics #############################
 
 # The id of the broker. This must be set to a unique integer for each broker.
-broker.id={{kafka_id}}
+{% for url in kafka_hosts.split(',') %}
+  {%- if url.split(':')[0] == ansible_fqdn or url.split(':')[0] in ansible_all_ipv4_addresses -%}
+broker.id={{loop.index0}}
 
 ############################# Socket Server Settings #############################
 
 # The port the socket server listens on
-port={{kafka_port}}
+port={{url.split(':')[1]}}
+  {% endif %}
+{% endfor %}
 
 # Hostname the broker will bind to and advertise to producers and consumers.
 # If not set, the server will bind to all interfaces and advertise the value returned from
