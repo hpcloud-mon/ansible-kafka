@@ -2,7 +2,7 @@
 
 # The id of the broker. This must be set to a unique integer for each broker.
 {% for url in kafka_hosts.split(',') %}
-  {%- if url.split(':')[0] == ansible_fqdn or url.split(':')[0] in ansible_all_ipv4_addresses or ( kafka_id is defined and kafka_id | int == loop.index0 ) -%}
+  {%- if url.split(':')[0] == ansible_fqdn or url.split(':')[0] in ansible_all_ipv4_addresses -%}
 broker.id={{loop.index0}}
 
 ############################# Socket Server Settings #############################
