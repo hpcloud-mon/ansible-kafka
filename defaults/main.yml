@@ -16,6 +16,7 @@ kafka_log_flush_interval_ms: 1000
 kafka_log_retention_hours: 24
 kafka_log_segment_bytes: 536870912
 kafka_log_cleanup_interval_mins: 1
+kafka_heap_opts: "-Xmx1G -Xms1G"
 zookeeper_connection_timeout_ms: 1000000
 
 verify: True

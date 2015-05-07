@@ -28,7 +28,7 @@
   when: init.stdout != 'systemd'
 
 - name: create upstart config
-  copy: dest={{kafka_upstart_conf}} owner=root group=root mode=644 src=kafka.conf
+  template: dest={{kafka_upstart_conf}} owner=root group=root mode=644 src=kafka.conf.j2
   notify:
     - restart kafka
   when: not use_systemd
