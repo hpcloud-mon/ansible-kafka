@@ -34,7 +34,7 @@
   when: not use_systemd
 
 - name: create systemd config
-  copy: dest={{kafka_systemd_service}} owner=root group=root mode=644 src=kafka.service
+  template: dest={{kafka_systemd_service}} owner=root group=root mode=644 src=kafka.service.j2
   notify:
     - restart kafka
   when: use_systemd
