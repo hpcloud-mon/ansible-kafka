@@ -20,7 +20,7 @@
   file: path=/opt/kafka state=link src=/opt/kafka_2.9.2-{{kafka_version}}
 
 - name: Overwrite the start script so the Java Opts can be changed if Kafka 0.8.1.1
-  template: dest=/opt/kafka_2.9.2-{{kafka_version}}/bin/kafka-server-start.sh owner=root group=root mode=775 src=kafka-server-start.sh.j2
+  lineinfile: dest=/opt/kafka_2.9.2-{{kafka_version}}/bin/kafka-server-start.sh regexp="^export KAFKA_HEAP_OPTS=" line="export KAFKA_HEAP_OPTS=\"{{ kafka_heap_opts }}\""
   notify:
     - restart kafka
   when: kafka_version == "0.8.1.1"
