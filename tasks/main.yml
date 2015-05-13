@@ -19,6 +19,12 @@
 - name: Link /opt/kafka to the right version
   file: path=/opt/kafka state=link src=/opt/kafka_2.9.2-{{kafka_version}}
 
+- name: Overwrite the start script so the Java Opts can be changed if Kafka 0.8.1.1
+  lineinfile: dest=/opt/kafka_2.9.2-{{kafka_version}}/bin/kafka-server-start.sh regexp="^export KAFKA_HEAP_OPTS=" line="export KAFKA_HEAP_OPTS=\"{{ kafka_heap_opts }}\""
+  notify:
+    - restart kafka
+  when: kafka_version == "0.8.1.1"
+
 - name: Detect if this is a systemd based system
   command: cat /proc/1/comm
   register: init
