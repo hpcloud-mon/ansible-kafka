@@ -14,14 +14,21 @@ port={{url.split(':')[1]}}
   {% endif %}
 {% endfor %}
 
-# Hostname the broker will bind to and advertise to producers and consumers.
-# If not set, the server will bind to all interfaces and advertise the value returned from
-# from java.net.InetAddress.getCanonicalHostName().
+# Hostname the broker will bind to. If not set, the server will bind to all interfaces
 {% if kafka_listen_address is defined %}
 host.name={{kafka_listen_address}}
 {% else %}
 #host.name=localhost
 {% endif %}
+
+# Hostname the broker will advertise to producers and consumers. If not set, it uses the
+# value for "host.name" if configured.  Otherwise, it will use the value returned from
+# java.net.InetAddress.getCanonicalHostName().
+#advertised.host.name=<hostname routable by clients>
+
+# The port to publish to ZooKeeper for clients to use. If this is not set,
+# it will publish the same port that the broker binds to.
+#advertised.port=<port accessible by clients>
 
 # The number of threads handling network requests
 num.network.threads={{kafka_num_network_threads}}
@@ -51,8 +58,8 @@ num.partitions={{kafka_num_partitions}}
 
 ############################# Log Flush Policy #############################
 
-# The following configurations control the flush of data to disk. This is among the most
-# important performance knob in kafka.
+# Messages are immediately written to the filesystem but by default we only fsync() to sync
+# the OS cache lazily. The following configurations control the flush of data to disk. 
 # There are a few important trade-offs here:
 #    1. Durability: Unflushed data may be lost if you are not using replication.
 #    2. Latency: Very large flush intervals may lead to latency spikes when the flush does occur as there will be a lot of data to flush.
@@ -66,9 +73,6 @@ log.flush.interval.messages={{kafka_log_flush_interval_messages}}
 # The maximum amount of time a message can sit in a log before we force a flush
 log.flush.interval.ms={{kafka_log_flush_interval_ms}}
 
-# Per-topic overrides for log.flush.interval.ms
-#log.flush.intervals.ms.per.topic=topic1:1000, topic2:3000
-
 ############################# Log Retention Policy #############################
 
 # The following configurations control the disposal of log segments. The policy can
@@ -81,14 +85,18 @@ log.retention.hours={{kafka_log_retention_hours}}
 
 # A size-based retention policy for logs. Segments are pruned from the log as long as the remaining
 # segments don't drop below log.retention.bytes.
-#log.retention.bytes=1073741824
+log.retention.bytes={{kafka_log_retention_bytes}}
 
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
 log.segment.bytes={{kafka_log_segment_bytes}}
 
-# The interval at which log segments are checked to see if they can be deleted according
+# The interval at which log segments are checked to see if they can be deleted according 
 # to the retention policies
-log.cleanup.interval.mins={{kafka_log_cleanup_interval_mins}}
+log.retention.check.interval.ms=60000
+
+# By default the log cleaner is disabled and the log retention policy will default to just delete segments after their retention expires.
+# If log.cleaner.enable=true is set the cleaner will be enabled and individual logs can then be marked for log compaction.
+log.cleaner.enable=false
 
 ############################# Zookeeper #############################
 
