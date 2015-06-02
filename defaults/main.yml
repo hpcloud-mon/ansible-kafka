@@ -13,7 +13,7 @@ kafka_socket_receive_buffer_bytes: 1048576
 kafka_socket_request_max_bytes: 104857600
 kafka_log_flush_interval_messages: 10000
 kafka_log_flush_interval_ms: 1000
-kafka_log_retention_bytes: 1073741824  # 1 GB
+kafka_log_retention_bytes: 104857600  #100 M
 kafka_log_retention_hours: 24
 kafka_log_segment_bytes: 536870912
 kafka_log_cleanup_interval_mins: 1
