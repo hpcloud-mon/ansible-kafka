@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-log4j.rootLogger=WARN, stdout 
+log4j.rootLogger={{ monasca_log_level }}, stdout
 
 log4j.appender.stdout=org.apache.log4j.ConsoleAppender
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
@@ -45,7 +45,7 @@ log4j.appender.controllerAppender.layout.ConversionPattern=[%d] %p %m (%c)%n
 #log4j.logger.kafka.perf=DEBUG, kafkaAppender
 #log4j.logger.kafka.perf.ProducerPerformance$ProducerThread=DEBUG, kafkaAppender
 #log4j.logger.org.I0Itec.zkclient.ZkClient=DEBUG
-log4j.logger.kafka=WARN, kafkaAppender
+log4j.logger.kafka={{ monasca_log_level }}, kafkaAppender
 
 # Tracing requests results in large logs
 #log4j.appender.requestAppender=org.apache.log4j.RollingFileAppender
