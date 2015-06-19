@@ -1,86 +1,12 @@
 ---
-- name: Install OpenJDK
-  apt: name=openjdk-7-jre-headless state=present
-  when: not skip_install
+- include: stop.yml
+  when: run_mode == 'Stop'
 
-- name: setup group
-  group: name={{kafka_group}} system=yes
+- include: install.yml
+  when: not skip_install and ( run_mode == 'Install' or run_mode == 'Deploy' )
 
-- name: Setup user
-  user: name={{kafka_user}} system=yes group={{kafka_group}}
+- include: configure.yml
+  when: run_mode == 'Configure' or run_mode == 'Deploy'
 
-- name: Fetch kafka binary package
-  get_url: dest=/root url="{{apache_mirror}}/kafka/{{kafka_version}}/kafka_2.9.2-{{kafka_version}}.tgz" timeout=30
-  register: get_url_result
-  until: "'OK' in get_url_result.msg"
-  retries: 5
-  delay: 1
-  when: not skip_install
-
-- name: Uncompress the kafka tar
-  unarchive: copy=no creates=/opt/kafka_2.9.2-{{kafka_version}} dest=/opt src=/root/kafka_2.9.2-{{kafka_version}}.tgz
-
-- name: Link /opt/kafka to the right version
-  file: path=/opt/kafka state=link src=/opt/kafka_2.9.2-{{kafka_version}}
-
-- name: Overwrite the start script so the Java Opts can be changed if Kafka 0.8.1.1
-  lineinfile: dest=/opt/kafka_2.9.2-{{kafka_version}}/bin/kafka-server-start.sh regexp="^export KAFKA_HEAP_OPTS=" line="export KAFKA_HEAP_OPTS=\"{{ kafka_heap_opts }}\""
-  notify:
-    - restart kafka
-  when: kafka_version == "0.8.1.1"
-
-- name: Detect if this is a systemd based system
-  command: cat /proc/1/comm
-  register: init
-- set_fact: use_systemd=True
-  when: init.stdout == 'systemd'
-- set_fact: use_systemd=False
-  when: init.stdout != 'systemd'
-
-- name: create upstart config
-  template: dest={{kafka_upstart_conf}} owner=root group=root mode=644 src=kafka.conf.j2
-  notify:
-    - restart kafka
-  when: not use_systemd
-
-- name: create systemd config
-  template: dest={{kafka_systemd_service}} owner=root group=root mode=644 src=kafka.service.j2
-  notify:
-    - restart kafka
-  when: use_systemd
-
-- command: systemctl daemon-reload
-  when: use_systemd
-
-- name: Create data_dir
-  file: path={{kafka_data_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
-
-- name: Remove lost+found in the datadir
-  file: path="{{kafka_data_dir}}/lost+found" state=absent
-
-- name: Create log_dir
-  file: path={{kafka_log_dir}} state=directory owner={{kafka_user}} group={{kafka_group}} mode=755
-
-- name: link conf_dir to /opt/kafka/config
-  file: path={{kafka_conf_dir}} state=link src=/opt/kafka/config
-
-# Setup log4j.properties
-- name: create log4j.properties
-  template: dest="{{kafka_conf_dir}}/log4j.properties" owner={{kafka_user}} group={{kafka_group}} mode=644 src=log4j.properties.j2
-  notify:
-    - restart kafka
-
-# Setup server.properties
-- name: create server.properties
-  template: dest="{{kafka_conf_dir}}/server.properties" owner={{kafka_user}} group={{kafka_group}} mode=640 src=server.properties.j2
-  notify:
-    - restart kafka
-
-- meta: flush_handlers
-
-- name: Enable kafka
-  service: name=kafka state=started enabled=yes
-
-- name: wait for kafka port
-  wait_for: host={{kafka_listen_address| default('localhost')}} port={{kafka_port}} state=started timeout=30
-  when: verify
+- include: start.yml
+  when: run_mode == 'Start' or run_mode == 'Deploy'

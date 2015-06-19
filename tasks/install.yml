@@ -1,0 +1,10 @@
+---
+- name: Install OpenJDK
+  apt: name=openjdk-7-jre-headless state=present
+
+- name: Fetch kafka binary package
+  get_url: dest=/root url="{{apache_mirror}}/kafka/{{kafka_version}}/kafka_2.9.2-{{kafka_version}}.tgz" timeout=30
+  register: get_url_result
+  until: "'OK' in get_url_result.msg"
+  retries: 5
+  delay: 1

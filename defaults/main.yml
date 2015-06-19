@@ -2,6 +2,7 @@
 apache_mirror: http://apache.mirrors.tds.net
 kafka_hosts: "{{ansible_fqdn}}:9092"
 kafka_version: 0.8.1.1
+run_mode: Deploy
 skip_install: False
 
 kafka_num_network_threads: 2
