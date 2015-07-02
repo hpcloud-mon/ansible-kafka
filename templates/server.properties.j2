@@ -3,7 +3,7 @@
 # The id of the broker. This must be set to a unique integer for each broker.
 {% for url in kafka_hosts.split(',') %}
   {%- set url_host = url.split(':')[0] -%}
-  {%- if url_host == ansible_fqdn or url_host in ansible_all_ipv4_addresses 
+  {%- if url_host == ansible_fqdn or url_host in ansible_all_ipv4_addresses
          or ( kafka_id is defined and loop.index0 == kafka_id | int ) -%}
 broker.id={{loop.index0}}
 
@@ -59,7 +59,7 @@ num.partitions={{kafka_num_partitions}}
 ############################# Log Flush Policy #############################
 
 # Messages are immediately written to the filesystem but by default we only fsync() to sync
-# the OS cache lazily. The following configurations control the flush of data to disk. 
+# the OS cache lazily. The following configurations control the flush of data to disk.
 # There are a few important trade-offs here:
 #    1. Durability: Unflushed data may be lost if you are not using replication.
 #    2. Latency: Very large flush intervals may lead to latency spikes when the flush does occur as there will be a lot of data to flush.
@@ -90,7 +90,7 @@ log.retention.bytes={{kafka_log_retention_bytes}}
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
 log.segment.bytes={{kafka_log_segment_bytes}}
 
-# The interval at which log segments are checked to see if they can be deleted according 
+# The interval at which log segments are checked to see if they can be deleted according
 # to the retention policies
 log.retention.check.interval.ms=60000
 
