@@ -30,3 +30,5 @@ verify: True
 # flag to track restart requirement during reconfigure
 monasca_kafka_restart_required: false
 
+monasca_kafka_restart_required: false
+
