@@ -26,3 +26,7 @@ monasca_log_level: WARN
 zookeeper_connection_timeout_ms: 1000000
 
 verify: True
+
+# flag to track restart requirement during reconfigure
+monasca_kafka_restart_required: false
+
