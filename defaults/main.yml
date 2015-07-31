@@ -31,4 +31,3 @@ verify: True
 monasca_kafka_restart_required: false
 
 monasca_kafka_restart_required: false
-
