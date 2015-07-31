@@ -2,3 +2,7 @@
 - name: restart kafka
   service: name=kafka state=restarted enabled=yes
   when: run_mode == 'Deploy'
+
+- name: monasca_kafka_config_change
+  set_fact:
+    monasca_kafka_restart_required: true

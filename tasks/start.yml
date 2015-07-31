@@ -1,5 +1,9 @@
 ---
-- name: Enable and Start Kafka
+- name: kafka | restart | restart kafka service
+  service: name=kafka state=restarted enabled=yes
+  when: monasca_kafka_restart_required
+
+- name: kafka | start | start kafka service
   service: name=kafka state=started enabled=yes
 
 - name: wait for kafka port
