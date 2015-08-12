@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 - name: setup group
   group: name={{kafka_group}} system=yes
 

@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 apache_mirror: http://apache.mirrors.tds.net
 kafka_hosts: "{{ansible_fqdn}}:9092"
 kafka_version: 0.8.1.1

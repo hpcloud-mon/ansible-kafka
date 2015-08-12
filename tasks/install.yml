@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 - name: Install OpenJDK
   apt: name=openjdk-7-jre-headless state=present
 

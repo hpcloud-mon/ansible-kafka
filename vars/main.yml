@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 kafka_conf_dir: /etc/kafka
 kafka_data_dir: /var/kafka
 kafka_group: kafka

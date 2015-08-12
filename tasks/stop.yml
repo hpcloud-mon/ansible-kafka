@@ -1,3 +1,5 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 - name: Stop Kafka
   service: name=kafka state=stopped

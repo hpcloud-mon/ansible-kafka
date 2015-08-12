@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 - include: stop.yml
   when: run_mode == 'Stop'
 
